@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #87CEFA, #00BFFF);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 28px;
+            border-bottom: 3px solid #00BFFF;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border 0.3s ease;
+            font-size: 16px;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #00BFFF;
+            outline: none;
+        }
+
+        .upload-group {
+            position: relative;
+            text-align: left;
+        }
+
+        .upload-label {
+            display: inline-block;
+            padding: 12px 20px;
+            color: white;
+            background-color: #00BFFF;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .upload-label:hover {
+            background-color: #1E90FF;
+        }
+
+        .form-group input[type="file"] {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .button-green {
+            background: #28a745;
+        }
+
+        .button-green:hover {
+            background: #218838;
+        }
+
+        .button-red {
+            background: #dc3545;
+        }
+
+        .button-red:hover {
+            background: #c82333;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Welcome, Artist</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Image Title</label>
+                <input type="text" id="name" placeholder="Name" name="name" required />
+            </div>
+            <div class="form-group">
+                <label for="desc">Image Description</label>
+                <textarea id="desc" name="desc" rows="4" placeholder="Description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" id="price" placeholder="Price" name="price" required />
+            </div>
+            <div class="form-group upload-group">
+                <label for="image" class="upload-label">Choose Image</label>
+                <input type="file" id="image" name="image" required onchange="updateFileName()"/>
+                <span class="file-name" id="file-name">No file chosen</span>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="button button-green">Upload</button>
+                <button type="button" onclick="window.location.href='/next'" class="button button-red">End</button>
+            </div>
+            
+        </form>
+    </div>
+    <script>
+        function updateFileName() {
+            const input = document.getElementById('image');
+            const fileName = document.getElementById('file-name');
+            fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No file chosen';
+        }
+    </script>
+</body>
+</html>

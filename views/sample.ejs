@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #d8b5ff; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: #d8b5ff; 
+            background-color: transparent; 
+            border: 2px solid #d8b5ff;
+        }
+
+        .button:hover {
+            background-color: #d8b5ff; 
+            color: white; 
+        }
+
+        .button-red {
+            background: #ffffff; 
+            margin-top: auto; 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+        }
+        
+
+        .description {
+            max-width: 600px;
+            text-align: center;
+            margin-top: 40px;
+            color: #333;
+        }
+
+        .center-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="description">
+        <h2>About Paintings</h2>
+        <p>Paintings are visual artworks created using various techniques and mediums. They often depict scenes, emotions, or ideas, and can evoke powerful responses from viewers.</p>
+        <p>Explore our collection of artistic expressions and discover the beauty of paintings from different artists.</p>
+    </div>
+
+    <button onclick="window.location.href='/home_customer'" class="button button-red">View Arts</button>
+
+   
+</body>
+</html>

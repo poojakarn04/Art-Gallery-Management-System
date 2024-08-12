@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+        .image-item {
+            margin: 10px;
+            border: 1px solid #ddd;
+            position: relative;
+           
+            width: calc(50% - 20px); 
+            box-sizing: border-box;
+            max-width: 300px; 
+        }
+        .image-item img {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer; 
+            transition: transform 0.3s ease;
+        }
+        .image-details {
+            display: none; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            padding: 20px;
+            text-align: left;
+            overflow-y: auto;
+            max-width: 80%; 
+            max-height: 80%; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .image-details p {
+            margin-bottom: 10px;
+        }
+        .add-to-cart {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #0056b3;
+        }
+        .cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 20;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        .cart h3 {
+            margin-top: 0;
+        }
+        .cart-items {
+            display: none;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .cart-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .cart-item img {
+            max-width: 50px;
+            margin-right: 10px;
+        }
+        .clear-cart {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .clear-cart:hover {
+            background-color: #c82333;
+        }
+        .view-cart {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .view-cart:hover {
+            background-color: #218838;
+        }
+        .total-price {
+            font-weight: bold;
+            margin-top: 10px;
+            display: none; 
+        }
+        .cart.full-screen {
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transform: none; 
+            cursor: default; 
+            padding: 40px;
+        }
+        .cart-items.show, .total-price.show {
+            display: block;
+            transition: max-height 0.3s ease-out;
+        }
+        .proceed-to-buy {
+            background-color: #ffc107;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            display: none;
+        }
+        .proceed-to-buy:hover {
+            background-color: #e0a800;
+        }
+        .order-summary {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 30;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .order-summary-content {
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .order-summary h3 {
+            margin-top: 0;
+        }
+        .confirm-booking {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .confirm-booking:hover {
+            background-color: #0056b3;
+        }
+        .booking-form {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 40;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .booking-form-content {
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .booking-form h3 {
+            margin-top: 0;
+        }
+        .booking-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .booking-form input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .booking-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .booking-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Image Gallery</h2>
+    <div class="image-container">
+        <% images.forEach(image => { %>
+            <div class="image-item">
+                <img src="data:<%= image.contentType %>;base64,<%= image.imageBase64 %>"
+                     alt="<%= image.filename %>"
+                     onclick="toggleDetails(this)">
+                <div class="image-details">
+                    <p><strong>Description:</strong> <%= image.description %></p>
+                    <p><strong>Artist:</strong> <%= image.username %></p>
+                    <p><strong>Price:</strong> <%= image.price %></p>
+                    <div><button class="add-to-cart" onclick="addToCart('<%= image.filename %>', '<%= image.username %>', '<%= image.price %>', '<%= image.contentType %>', '<%= image.imageBase64 %>')">Add to Cart</button></div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <div class="cart" id="cart">
+        <h3>Cart</h3>
+        <button class="view-cart" onclick="toggleCart(event)">View Cart</button>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="total-price" id="total-price">Total Price: $0</div>
+        <button class="clear-cart" onclick="clearCart(event)">Clear Cart</button>
+        <button class="proceed-to-buy" id="proceed-to-buy" onclick="proceedToBuy(event)">Proceed to Buy</button>
+    </div>
+
+    <div class="order-summary" id="order-summary">
+        <div class="order-summary-content">
+            <h3>Order Summary</h3>
+            <div id="order-details"></div>
+            <button class="confirm-booking" onclick="showBookingForm()">Confirm Booking</button>
+        </div>
+    </div>
+    
+    <div class="booking-form" id="booking-form">
+        <div class="booking-form-content">
+            <h3>Booking Form</h3>
+            <form id="bookingForm">
+                 <label for="customer-name">Customer Name:</label>
+                <input type="text" id="username" name="username" value="<%= username %>" readonly required>
+                <label for="total-price-input">Total Price:</label>
+                <input type="text" id="total-price-input" name="totalPrice" readonly>
+                <button type="button" onclick="submitBooking()">OK</button>
+            </form>
+         </div>
+    </div>
+   
+    
+
+
+    <script>
+        let totalPrice = 0;
+
+        function toggleDetails(img) {
+            var details = img.nextElementSibling;
+            if (details.style.display === "block") {
+                details.style.display = "none";
+                img.style.transform = "scale(1)";
+            } else {
+                details.style.display = "block";
+                img.style.transform = "scale(0.8)"; 
+            }
+        }
+
+        function addToCart(filename, username, price, contentType, imageBase64) {
+            var cartItems = document.getElementById('cart-items');
+            var cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+                <img src="data:${contentType};base64,${imageBase64}" alt="${filename}">
+                <div>
+                    <p><strong>Artist:</strong> ${username}</p>
+                    <p><strong>Price:</strong> ${price}</p>
+                </div>
+            `;
+            cartItems.appendChild(cartItem);
+
+            totalPrice += parseFloat(price.replace('$', ''));
+document.getElementById('total-price').innerText = `Total Price: $${totalPrice.toFixed(2)}`;
+document.getElementById('proceed-to-buy').style.display = 'block';
+
+        }
+
+        function clearCart(event) {
+            event.stopPropagation(); 
+            var cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            totalPrice = 0;
+            document.getElementById('total-price').innerText = 'Total Price: $0';
+            document.getElementById('proceed-to-buy').style.display = 'none';
+        }
+
+        function toggleCart(event) {
+            event.stopPropagation(); 
+            var cart = document.getElementById('cart');
+            var cartItems = document.getElementById('cart-items');
+            var totalPriceElement = document.getElementById('total-price');
+
+            if (cart.classList.contains('full-screen')) {
+                cart.classList.remove('full-screen');
+                cartItems.classList.remove('show');
+                totalPriceElement.classList.remove('show');
+            } else {
+                cart.classList.add('full-screen');
+                cartItems.classList.add('show');
+                totalPriceElement.classList.add('show');
+            }
+        }
+
+        document.body.addEventListener('click', function() {
+            var cart = document.getElementById('cart');
+            var cartItems = document.getElementById('cart-items');
+            var totalPriceElement = document.getElementById('total-price');
+
+            cart.classList.remove('full-screen');
+            cartItems.classList.remove('show');
+            totalPriceElement.classList.remove('show');
+        });
+
+        document.getElementById('cart').addEventListener('click', function(event) {
+            event.stopPropagation(); 
+        });
+
+        function proceedToBuy(event) {
+            event.stopPropagation(); 
+
+            var orderSummary = document.getElementById('order-summary');
+            var orderDetails = document.getElementById('order-details');
+            orderDetails.innerHTML = `
+                
+                <div>${document.getElementById('cart-items').innerHTML}</div>
+                <p><strong>Total Price:</strong> $${totalPrice.toFixed(2)}</p>
+            `;
+            orderSummary.style.display = 'flex';
+        }
+
+       // Define the totalPrice variable, assuming it's dynamically calculated
+//var totalPrice = 123.45;  // Replace with your actual total price calculation
+
+function showBookingForm() {
+    console.log("Hi inside showBookingForm");
+    var bookingForm = document.getElementById('booking-form');
+    var totalPriceInput = document.getElementById('total-price-input');
+    totalPriceInput.value = `$${totalPrice.toFixed(2)}`;  // Ensure the value is set correctly
+    bookingForm.style.display = 'flex';  // Change display to block or another style to make it visible
+}
+
+async function submitBooking() {
+   console.log("Inside submitBooking");
+    const username = document.getElementById('username').value;
+    const totalPrice = document.getElementById('total-price-input').value;
+
+    try {
+        console.log("Inside inside")
+        const response = await fetch('/submit-booking', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, totalPrice })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Booking confirmed!");
+            var bookingForm = document.getElementById('booking-form');
+            bookingForm.style.display = 'none';
+            clearCart({ stopPropagation: function() {} });
+             window.location.href = '/'; 
+            //res.render('sample');
+        } else {
+            alert("Error saving booking. Please try again.");
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert("An error occurred while processing your booking. Please try again.");
+    }
+}
+</script>
+
+
+   
+</body>
+</html>

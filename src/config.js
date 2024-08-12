@@ -1,13 +1,19 @@
 const mongoose = require('mongoose');
 
+// Get MongoDB URI from environment variables
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/dbms-login';
+
 // Connect to MongoDB
-const connect = mongoose.connect('mongodb://localhost:27017/dbms-login');
+const connect = mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // Check database connection
 connect.then(() => {
   console.log('Database is successfully connected');
-}).catch(() => {
-  console.log('Database cannot be connected');
+}).catch((err) => {
+  console.error('Database connection error:', err);
 });
 
 // Create schema for user login
@@ -61,8 +67,6 @@ const ImageSchema = new mongoose.Schema({
 });
 
 const FinalSchema = new mongoose.Schema({
-  
-  
   username: {
     type: String,
     required: true
@@ -72,11 +76,12 @@ const FinalSchema = new mongoose.Schema({
     required: true
   }
 });
- 
+
 // Collection part
 const UserCollection = mongoose.model('users', LoginSchema);
 const ImageCollection = mongoose.model('uploads.files', ImageSchema);
-const FinalCollection = mongoose.model('grandtotal',FinalSchema)
+const FinalCollection = mongoose.model('grandtotal', FinalSchema);
+
 module.exports = {
   UserCollection,
   ImageCollection,

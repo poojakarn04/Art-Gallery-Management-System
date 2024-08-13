@@ -3,7 +3,7 @@ require('dotenv').config();
 console.log('MongoDB URI:', process.env.MONGODB_URI);
 
 const mongoose = require('mongoose');
-const mongoURI = process.env.MONGODB_URI;
+const mongoURI = process.env.MONGODB_URI ||'mongodb://localhost:27017/dbms-login';
 
 mongoose.connect(mongoURI)
   .then(() => console.log('Database connected successfully'))

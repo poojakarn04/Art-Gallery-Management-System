@@ -8,11 +8,70 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #87CEFA, #00BFFF);
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            background: #1E90FF;
+            color: white;
+            width: 40%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: -40%;
+            height: 100vh;
+            animation: slideIn 1s forwards;
+            z-index: 1; /* Ensure sidebar is above other content */
+        }
+
+        @keyframes slideIn {
+            to {
+                left: 0;
+            }
+        }
+
+        .sidebar h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-family: 'Lucida Handwriting', 'Comic Sans MS', cursive;
+        }
+
+        .sidebar p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: #f7f4f4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            color: #1E90FF;
+        }
+
+        .main-content {
+            margin-left: 40%;
+            width: 60%;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
 
         .form-container {
@@ -100,41 +159,55 @@
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Signup</h2>
-        <form action="/signup" method="post">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group">
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="">Select your gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="role">Role:</label>
-                <select id="role" name="role" required>
-                    <option value="">Select your role</option>
-                    <option value="artist">Artist</option>
-                    <option value="customer">Customer</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-            </div>
-            <button type="submit" class="submit-btn">Signup</button>
-        </form>
-        <h5><a href="http://localhost:3000/">Back to Login Page</a></h5>
+    <div class="sidebar">
+        <h3>Welcome to ArtZone</h3>
+        <p>
+            Explore, discover, and purchase unique pieces of art from talented artists worldwide. Follow the guidelines to ensure a smooth and enjoyable experience on our platform.
+        </p>
+        <ul>
+            <li><a href="#">If you are want to upload arts on the website, Please choose your role as Artist</a></li>
+            <li><a href="#">If you want to buy arts from our website, Please choose your role as Customer</a></li>
+          <h3><li class="bold">Art is something that makes you breathe with a different kind of happiness</li></h3>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <div class="form-container">
+            <h2>Signup</h2>
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" name="role" required>
+                        <option value="">Select your role</option>
+                        <option value="artist">Artist</option>
+                        <option value="customer">Customer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Signup</button>
+            </form>
+            <h5><a href="http://localhost:3000/">Back to Login Page</a></h5>
+        </div>
     </div>
 </body>
 </html>

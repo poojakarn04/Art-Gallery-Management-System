@@ -8,12 +8,64 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #87CEFA, #00BFFF);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrolling while sidebar is sliding */
+            display: flex;
+            height: 100vh;
         }
+
+        .sidebar {
+    background: #1E90FF;
+    color: white;
+    width: 40%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: -40%; /* Start off-screen */
+    padding: 20px;
+    box-sizing: border-box;
+    transition: left 0.5s ease; /* Smooth sliding effect */
+    z-index: 1; /* Ensure the sidebar is above other content */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+}
+
+.sidebar.show {
+    left: 0; /* Slide into view */
+}
+
+.sidebar h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-family: 'Lucida Handwriting', 'Comic Sans MS', cursive;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    text-align: center; /* Center text in the list */
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #f7f4f4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #87CEFA;
+}
+
+.sidebar ul li.bold {
+    font-weight: bold;
+}
+
 
         .form-container {
             background: white;
@@ -22,8 +74,12 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             text-align: center;
             max-width: 500px;
-            width: 100%;
+            width: 60%; /* Adjust width to account for sidebar */
+            margin-top: 50px;
+            margin-left: 50%; /* Move content to make space for sidebar */
             animation: fadeIn 1s ease-in-out;
+            z-index: 0; /* Ensure form container is below sidebar */
+            height: 550px;
         }
 
         @keyframes fadeIn {
@@ -135,6 +191,17 @@
     </style>
 </head>
 <body>
+    <div class="sidebar">
+        <h3>Art Zone</h3>
+        <ul>
+            <li class="bold"><a href="#">Recommended that your art sshould be:</a></li>
+            <li><a href="#">Less than 55kb</a></li>
+            <li>Height: 1000 pixels</li>
+            <li>Width: 700 pixels</li>
+        </ul>
+     
+    </div>
+
     <div class="form-container">
         <h2>Welcome, Artist</h2>
         <form action="/upload" method="POST" enctype="multipart/form-data">
@@ -159,7 +226,6 @@
                 <button type="submit" class="button button-green">Upload</button>
                 <button type="button" onclick="window.location.href='/next'" class="button button-red">End</button>
             </div>
-            
         </form>
     </div>
     <script>
@@ -168,6 +234,11 @@
             const fileName = document.getElementById('file-name');
             fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No file chosen';
         }
+
+        // Show sidebar when page loads
+        window.addEventListener('load', () => {
+            document.querySelector('.sidebar').classList.add('show');
+        });
     </script>
 </body>
 </html>

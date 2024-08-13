@@ -11,7 +11,7 @@ const { GridFSBucket } = require('mongodb');
 require('dotenv').config();
 const app = express();
 
-const mongoURI = process.env.MONGODB_URI;
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/dbms-login';
 const conn = mongoose.createConnection(mongoURI);
 
 let gfs;

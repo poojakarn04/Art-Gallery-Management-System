@@ -8,10 +8,10 @@ const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { GridFSBucket } = require('mongodb');
-
+require('dotenv').config();
 const app = express();
 
-const mongoURI = 'mongodb://localhost:27017/dbms-login';
+const mongoURI = process.env.MONGODB_URI;
 const conn = mongoose.createConnection(mongoURI);
 
 let gfs;

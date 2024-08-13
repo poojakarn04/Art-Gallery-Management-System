@@ -1,20 +1,11 @@
 const mongoose = require('mongoose');
 
-// Get MongoDB URI from environment variables
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/dbms-login';
 
-// Connect to MongoDB
-const connect = mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(mongoURI)
+  .then(() => console.log('Database connected successfully'))
+  .catch(err => console.error('Database connection error:', err));
 
-// Check database connection
-connect.then(() => {
-  console.log('Database is successfully connected');
-}).catch((err) => {
-  console.error('Database connection error:', err);
-});
 
 // Create schema for user login
 const LoginSchema = new mongoose.Schema({

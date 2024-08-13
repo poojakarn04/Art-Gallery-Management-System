@@ -1,5 +1,8 @@
-const mongoose = require('mongoose');
 require('dotenv').config();
+
+console.log('MongoDB URI:', process.env.MONGODB_URI);
+
+const mongoose = require('mongoose');
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/dbms-login';
 
 mongoose.connect(mongoURI)
